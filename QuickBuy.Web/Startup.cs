@@ -35,6 +35,7 @@ namespace QuickBuy.Web
                                                                   m => m.MigrationsAssembly("QuickBuy.Repository")));
 
       services.AddScoped<IRepositoryProduto, RepositoryProduto>();
+      services.AddScoped<IRepositoryUsuario, RepositoryUsuario>();
 
       // In production, the Angular files will be served from this directory
       services.AddSpaStaticFiles(configuration =>

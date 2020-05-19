@@ -31,6 +31,19 @@ namespace QuickBuy.Web.Controllers
       }
     }
 
+    [HttpGet("GetById")]
+    public IActionResult GetById(int id)
+    {
+      try
+      {
+        return Ok(_repositoryProduto.GetById(id));
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex.ToString());
+      }
+    }
+
     public IActionResult Post([FromBody]Produto produto)
     {
       try

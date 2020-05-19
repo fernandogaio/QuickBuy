@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Usuario } from "../../model/usuario";
 import { Router, ActivatedRoute } from "@angular/router";
+import { UsuarioService } from "../../service/cadastro/usuario.service";
 
 @Component({
   selector: "app-login",
@@ -11,8 +12,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class LoginComponent implements OnInit {
   public usuario;
   public returnUrl: string;
+  public msg: string;
+  private activeSpin: boolean;
 
-  constructor(private router: Router, private activatedRouter: ActivatedRoute) {  }
+  constructor(private router: Router, 
+              private activatedRouter: ActivatedRoute,
+              private userService: UsuarioService) {  }
 
   ngOnInit(): void {
     this.returnUrl = this.activatedRouter.snapshot.queryParams['returnUrl'];
@@ -20,10 +25,23 @@ export class LoginComponent implements OnInit {
   }
 
   entrar() {
-    if (this.usuario.email == "fer@gmail.com" && this.usuario.senha == "123") {
-      sessionStorage.setItem("usuario-autenticado", "1");
-      this.router.navigate([this.returnUrl]);
-    }
+    this.activeSpin = true;
+    this.userService.verifyUser(this.usuario)
+      .subscribe(
+        data => {
+          this.userService.user = data;
+
+          if(this.returnUrl == null)
+            this.router.navigate(['/']);
+          else
+            this.router.navigate([this.returnUrl]);
+        }, 
+        err => {
+          console.log(err.error);
+          this.msg = err.error;
+          this.activeSpin = false;
+        }
+      );
   }
 
 }

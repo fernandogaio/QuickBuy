@@ -7,6 +7,6 @@ namespace QuickBuy.Domain.Contract
 {
   public interface IRepositoryUsuario : IRepositoryBase<Usuario>
   {
-
+    Usuario Get(string email, string senha);
   }
 }

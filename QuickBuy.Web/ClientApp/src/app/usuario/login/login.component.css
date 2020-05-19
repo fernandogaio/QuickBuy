@@ -1,21 +1,20 @@
-.form-signin{
-    width: 100%;
-    max-width: 420px;
-    padding: 15px;
-    margin: auto;
+.form-signin {
+  width: 100%;
+  max-width: 420px;
+  padding: 15px;
+  margin: auto;
 }
 
-.form-signin input[type="email"]
-{
+  .form-signin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-}
+  }
 
-.form-signin .form-control{
+  .form-signin .form-control {
     position: relative
-}
+  }
 
-.login{
-    color: #666;
+.login {
+  color: #666;
 }
