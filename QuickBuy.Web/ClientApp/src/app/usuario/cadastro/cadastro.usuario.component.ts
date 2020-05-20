@@ -10,6 +10,9 @@ import { Usuario } from '../../model/usuario';
 
 export class CadastroUsuarioComponent implements OnInit{
   public user: Usuario;
+  public activeSpin: boolean;
+  public msg: string;
+  public userRegistered: boolean;
 
   constructor(private userService: UsuarioService) { }
   
@@ -18,15 +21,20 @@ export class CadastroUsuarioComponent implements OnInit{
   }
 
   public add() {
-    // this.userService.addUser()
-    //   .subscribe(
-    //     data => {
+    this.activeSpin = true;
 
-    //     },
-    //     err => {
-
-    //     }  
-    //   );
+    this.userService.addUser(this.user)
+      .subscribe(
+        data => {
+          this.userRegistered = true;
+          this.msg = "";
+          this.activeSpin = false;
+        },
+        err => {
+          this.msg = err.error;
+          this.activeSpin = false;
+        }  
+      );
   }
 
 }

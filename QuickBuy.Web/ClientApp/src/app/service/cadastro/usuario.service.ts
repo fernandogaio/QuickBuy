@@ -29,29 +29,24 @@ export class UsuarioService{
     this._user = null;
   }
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string){ }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.baseUrl = baseUrl
+  }
 
-  public verifyUser(user: Usuario) : Observable<Usuario> {
-    var headers = new HttpHeaders().set('content-type', 'applicatio/json');
+  get headers(): HttpHeaders {
+    return new HttpHeaders().set('content-type', 'application/json');
+  }
 
+  public verifyUser(user: Usuario): Observable<Usuario> {
     var body = {
       email: user.email,
       senha: user.senha
     }
-    return this.http.post<Usuario>(this.baseUrl + "api/usuario/verifyUser", body, { headers });
+    return this.http.post<Usuario>(this.baseUrl + "api/usuario/verifyUser", body, { headers: this.headers });
   }
 
   public addUser(user: Usuario) : Observable<Usuario> {
-    var headers = new HttpHeaders().set('content-type', 'applicatio/json');
-
-     var body = {
-       email: user.email,
-       senha: user.senha,
-       nome: user.nome,
-       sobreNome: user.sobreNome,
-     }
-
-     return this.http.post<Usuario>(this.baseUrl + "api/usuario", body, { headers });
+    return this.http.post<Usuario>(this.baseUrl + "api/usuario", JSON.stringify(user), { headers: this.headers });
   }
 
 }

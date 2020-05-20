@@ -10,6 +10,9 @@ import { ProdutoService } from "../service/produto/produto.service";
 
 export class ProdutoComponent implements OnInit {
   public produto: Produto;
+  public fileSelected: File;
+  public activeSpin: boolean;
+  public msg: string;
 
   constructor(private produtoService: ProdutoService){
 
@@ -17,6 +20,20 @@ export class ProdutoComponent implements OnInit {
 
   ngOnInit(): void{
     this.produto = new Produto();
+  }
+
+  public inputChange(files: FileList) {
+    this.fileSelected = files.item(0);
+    this.activeSpin = true;
+    this.produtoService.uploadFile(this.fileSelected).subscribe(
+      r => {
+        this.produto.nomeArquivo = r; 
+        this.activeSpin = false;
+      }, 
+      e => {
+        this.activeSpin = false;
+      }
+    );
   }
 
   public cadastrar() {

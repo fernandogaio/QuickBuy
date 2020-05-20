@@ -8,17 +8,18 @@ import { Produto } from "../../model/produto";
 })
 export class ProdutoService implements OnInit {
   private baseUrl: string;
-  private produto: Produto;
   public produtos: Produto[];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string){ }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
   ngOnInit(): void{
     this.produtos = [];   
   }
 
   get headers(): HttpHeaders{
-    return new HttpHeaders().set('content-type', 'applicatio/json');
+    return new HttpHeaders().set('content-type', 'application/json');
   }
 
   public add(produto: Produto): Observable<Produto> {
@@ -39,6 +40,12 @@ export class ProdutoService implements OnInit {
 
   public getById(produtoId: number): Observable<Produto>{
     return this.http.get<Produto>(this.baseUrl + "api/produto/getById?" + produtoId);  
+  }
+
+  public uploadFile(file: File): Observable<string>{
+    const formData: FormData = new FormData();
+    formData.append("fileSent", file, file.name)
+    return this.http.post<string>(this.baseUrl + "api/produto/uploadFile", formData);
   }
 
 }

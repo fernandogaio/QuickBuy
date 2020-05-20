@@ -17,9 +17,21 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="!userAuth()">
             <a class="nav-link text-dark" [routerLink]='["/entrar"]'>Entrar</a>
           </li>
-          <li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="userAuth()">
-            <a class="nav-item nav-link text-dark" [routerLink]='["/sair"]' (click)="exit()">Sair</a>
+          
+          <li class="nav-item dropdown" *ngIf="userAuth()">
+            <a class="nav-link text-dark dropdown-toggle" role="button" aria-haspopup="true"
+               aria-expanded="false" id="linkMenu" data-toggle="dropdown" href="#">
+              {{user.nome}}
+            </a>
+
+            <ul class="dowpdown-menu" aria-labelledby="linkMenu">
+              <li class="dowpdown-item" role="menu" [routerLink]='["/sair"]' (click)="exit()"> Sair </li>
+            </ul>
           </li>
+
+          <!--<li class="nav-item" [routerLinkActive]='["link-active"]' *ngIf="userAuth()">
+            <a class="nav-item nav-link text-dark" [routerLink]='["/sair"]' (click)="exit()">Sair</a>
+          </li>-->
         </ul>
       </div>
     </div>

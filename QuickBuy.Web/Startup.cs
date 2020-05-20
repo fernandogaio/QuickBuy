@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using QuickBuy.Domain.Contract;
 using QuickBuy.Repository.Context;
 using QuickBuy.Repository.Repositories;
+using System.Net.Http;
 
 namespace QuickBuy.Web
 {
@@ -27,6 +29,7 @@ namespace QuickBuy.Web
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
       var connectionString = Configuration.GetConnectionString("QuickBuyDB");
       services.AddDbContext<QuickBuyContext>(option => option
